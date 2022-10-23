@@ -4,7 +4,7 @@ Application logic
 """
 from os import getenv
 
-from flask import Flask
+from flask import Flask, jsonify
 
 from models import storage
 from api.v1.views import app_views
@@ -20,6 +20,11 @@ api_port = getenv('HBNB_API_PORT', '5000')
 def teardown(exception):
     """ Commit changes in database """
     storage.close()
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({"error": "Not found"})
 
 
 if __name__ == '__main__':
