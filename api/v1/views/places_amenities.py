@@ -38,7 +38,7 @@ def delete_amenity_place(place_id, amenity_id):
 
     if amenity_objs is None:
         abort(404)
-    if amenity_objs not in place_obj.amenities:
+    if amenity_objs not in place_objs.amenities:
         abort(404)
     storage.delete(amenities_objs)
     storage.save()
