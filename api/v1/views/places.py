@@ -97,3 +97,16 @@ def update_place(place_id):
         setattr(obj, key, value)
     storage.save()
     return jsonify(obj.to_dict())
+
+
+@app_views.route('/places_search', strict_slashes=False, methods=['POST'])
+def search_places():
+    """
+    Retrieves all Place objects
+    """
+    data_json = request.get_json(force=True, silent=True)
+    if (type(data_json) is not dict):
+        abort(400, "Not a JSON")
+    if data_json == {}:
+        all_places = storage.all(classes["Place"])
+        return all_places
