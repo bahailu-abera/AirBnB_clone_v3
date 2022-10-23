@@ -29,7 +29,7 @@ class User(BaseModel, Base):
         """ Hash the password """
         if name == "password":
             super(User, self).__setattr__(name,
-                                          md5(value.encode()).hexidigest())
+                                          md5(value.encode()).hexdigest())
         else:
             super(User, self).__setattr__(name, value)
 
