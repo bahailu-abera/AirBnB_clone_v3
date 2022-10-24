@@ -140,7 +140,7 @@ def search_places():
 
     if ("amenities" in data_json):
         amenity_objs = [storage.get(classes["Amenity"], id)
-                     for id in data_json["amenities"]]
+                        for id in data_json["amenities"]]
         i = 0
         length = len(places)
         while i < length:
