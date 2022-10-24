@@ -107,9 +107,12 @@ def search_places():
     data_json = request.get_json(force=True, silent=True)
     if (type(data_json) is not dict):
         abort(400, "Not a JSON")
-    if data_json == {}:
-        all_places = storage.all(classes["Place"])
-        return all_places
+    if not data_json or (
+            not data_json.get("states") and
+            not data_json.get("cities") and
+            not data_json.get("amenities")):
+        all_places = storage.all("Place")
+        return jsonify([place.to_dict() for place in all_places.values()])
     all_places = []
     if ("states" in data_json):
         states = data_json["states"]
