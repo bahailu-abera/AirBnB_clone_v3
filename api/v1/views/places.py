@@ -110,3 +110,30 @@ def search_places():
     if data_json == {}:
         all_places = storage.all(classes["Place"])
         return all_places
+    all_places = set()
+    if ("states" in data_json):
+        states = data_json["states"]
+        for state_id in states:
+            state_obj = storage.get(classes["State"], state_id)
+            if state_obj is None:
+                continue
+            for city in state_obj.cities:
+                city_obj = storage.get(classes["City"], city.id)
+                for place in city_obj.places:
+                    all_places.add(place.to_dict())
+    if ("cities" in data_json):
+        cities = data_json["cities"]
+        for city_id in cities:
+            city_obj = storage.get(classes["City"], city_id)
+            if city_obj is None:
+                continue
+            for place in city_obj.places:
+                all_places.add(place.to_dict())
+    all_places = list(all_places)
+    if ("amenities" in data_json):
+        amenities = data_json["amenities"]
+        for i in range(len(all_places)):
+            for amenity in amenities:
+                if all_places[i]["amenity_id"] != amenity:
+                    del all_places[i]
+    return all_places
