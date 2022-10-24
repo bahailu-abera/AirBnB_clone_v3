@@ -136,4 +136,4 @@ def search_places():
             for amenity in amenities:
                 if all_places[i]["amenity_id"] != amenity:
                     del all_places[i]
-    return all_places
+    return jsonify(all_places)
